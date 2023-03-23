@@ -33,11 +33,6 @@ public class UsuariosServiceImpl implements UsuariosService {
 	}
 
 	@Override
-	public Usuario findByToken(String token) throws ErrorException {
-		return repo.findByToken(token).orElseThrow(() -> new ErrorException(Errores.NO_ENCONTRADO, HttpStatus.NOT_FOUND));
-	}
-
-	@Override
 	public Usuario save(Usuario u) throws ErrorException {
 		return repo.save(u);
 	}

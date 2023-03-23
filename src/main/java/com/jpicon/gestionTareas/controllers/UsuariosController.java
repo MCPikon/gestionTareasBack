@@ -44,15 +44,6 @@ public class UsuariosController {
 		}
 	}
 	
-	@GetMapping("/findByToken/{token}")
-	public ResponseEntity<?> findByToken(@PathVariable("token") String token) {
-		try {
-			return ResponseEntity.ok(usersService.findByToken(token));
-		} catch (ErrorException e) {
-			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
-		}
-	}
-	
 	@PostMapping("/addUsuario")
 	public ResponseEntity<?> save(@RequestBody Usuario u) {
 		try {

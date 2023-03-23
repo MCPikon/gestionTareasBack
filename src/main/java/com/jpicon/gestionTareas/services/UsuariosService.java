@@ -11,8 +11,6 @@ public interface UsuariosService {
 	
 	public Usuario findById(Long id) throws ErrorException;
 	
-	public Usuario findByToken(String token) throws ErrorException;
-	
 	public Usuario save(Usuario u) throws ErrorException;
 	
 	public Usuario update(Usuario u) throws ErrorException;
