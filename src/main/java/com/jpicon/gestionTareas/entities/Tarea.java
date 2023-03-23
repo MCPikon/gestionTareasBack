@@ -12,99 +12,45 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Table(name = "tareas")
+@Table(name = "tarea")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Tarea {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_tarea")
-	private Long idTarea;
+	@Column(name = "id")
+	private int id;
 	
-	@Column(name = "titulo")
+	@Column(name = "titulo", nullable = false)
 	private String titulo;
 	
-	@Column(name = "descripcion")
+	@Column(name = "descripcion", nullable = false)
 	private String descripcion;
 	
-	@Column(name = "estado")
+	@Column(name = "estado", nullable = false)
 	private String estado;
 	
-	@Column(name = "fecha_creacion")
+	@Column(name = "fecha_creacion", nullable = false)
 	private Date fechaCreacion;
 	
-	@Column(name = "fecha_limite")
+	@Column(name = "fecha_limite", nullable = false)
 	private Date fechaLimite;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+	@JoinColumn(name = "id_usuario", referencedColumnName = "id")
 	@JsonIgnoreProperties({"tareas"})
 	private Usuario usuario;
 
-	public Tarea() {
+	public Tarea(int id, Usuario usuario) {
 		super();
-	}
-
-	public Tarea(Long idTarea, Usuario usuario) {
-		super();
-		this.idTarea = idTarea;
-		this.usuario = usuario;
-	}
-
-	public Long getIdTarea() {
-		return idTarea;
-	}
-
-	public void setIdTarea(Long idTarea) {
-		this.idTarea = idTarea;
-	}
-
-	public String getTitulo() {
-		return titulo;
-	}
-
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public Date getFechaCreacion() {
-		return fechaCreacion;
-	}
-
-	public void setFechaCreacion(Date fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
-	}
-
-	public Date getFechaLimite() {
-		return fechaLimite;
-	}
-
-	public void setFechaLimite(Date fechaLimite) {
-		this.fechaLimite = fechaLimite;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
+		this.id = id;
 		this.usuario = usuario;
 	}
 

@@ -1,7 +1,9 @@
 package com.jpicon.gestionTareas.servicesImpl;
 
 import java.util.List;
+import java.util.Optional;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.jpicon.gestionTareas.repositories.UsuariosRepository;
 import com.jpicon.gestionTareas.services.UsuariosService;
 
 @Service
+@Transactional
 public class UsuariosServiceImpl implements UsuariosService {
 
 	@Autowired
@@ -28,8 +31,23 @@ public class UsuariosServiceImpl implements UsuariosService {
 	}
 
 	@Override
-	public Usuario findById(Long id) throws ErrorException {
+	public Usuario findById(int id) throws ErrorException {
 		return repo.findById(id).orElseThrow(() -> new ErrorException(Errores.NO_ENCONTRADO, HttpStatus.NOT_FOUND));
+	}
+
+	@Override
+	public Optional<Usuario> getByEmail(String email) throws ErrorException {
+		return repo.findByEmail(email);
+	}
+
+	@Override
+	public Optional<Usuario> getByTokenPassword(String tokenPassword) throws ErrorException {
+		return repo.findByTokenPassword(tokenPassword);
+	}
+
+	@Override
+	public boolean existsByEmail(String email) throws ErrorException {
+		return repo.existsByEmail(email);
 	}
 
 	@Override
@@ -43,7 +61,7 @@ public class UsuariosServiceImpl implements UsuariosService {
 	}
 
 	@Override
-	public String delete(Long id) throws ErrorException {
+	public String delete(int id) throws ErrorException {
 		repo.deleteById(id);
 		return "ok";
 	}

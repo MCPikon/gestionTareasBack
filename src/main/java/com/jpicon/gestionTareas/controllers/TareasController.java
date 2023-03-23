@@ -36,19 +36,8 @@ public class TareasController {
 		}
 	}
 	
-	@GetMapping("/getAllByUsuario/{idUsuario}")
-	public ResponseEntity<?> findAllByUsuario(@PathVariable("idUsuario") Long id) {
-		try {
-			Usuario u = new Usuario(id);
-			List<Tarea> tareas = tasksService.findAllByUsuario(u);
-			return ResponseEntity.ok(tareas);
-		} catch (ErrorException e) {
-			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
-		}
-	}
-	
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<?> findById(@PathVariable("id") Long id) {
+	public ResponseEntity<?> findById(@PathVariable("id") int id) {
 		try {
 			return ResponseEntity.ok(tasksService.findById(id));
 		} catch (ErrorException e) {
@@ -75,7 +64,7 @@ public class TareasController {
 	}
 	
 	@DeleteMapping("/deleteTarea/{idTarea}")
-	public ResponseEntity<?> delete(@PathVariable("idTarea") Long idTarea) {
+	public ResponseEntity<?> delete(@PathVariable("idTarea") int idTarea) {
 		try {
 			return ResponseEntity.ok(tasksService.delete(idTarea));
 		} catch (ErrorException e) {

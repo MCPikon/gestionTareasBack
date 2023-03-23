@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.jpicon.gestionTareas.entities.Tarea;
 import com.jpicon.gestionTareas.entities.Usuario;
 
-public interface TareasRepository extends JpaRepository<Tarea, Long>{
-	
-	List<Tarea> findByUsuario(Usuario u);
+public interface TareasRepository extends JpaRepository<Tarea, Integer>{
 
 }

@@ -36,7 +36,7 @@ public class UsuariosController {
 	}
 	
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<?> findById(@PathVariable("id") Long id) {
+	public ResponseEntity<?> findById(@PathVariable("id") int id) {
 		try {
 			return ResponseEntity.ok(usersService.findById(id));
 		} catch (ErrorException e) {
@@ -63,7 +63,7 @@ public class UsuariosController {
 	}
 	
 	@DeleteMapping("/deleteUsuario/{idUsuario}")
-	public ResponseEntity<?> delete(@PathVariable("idUsuario") Long idUsuario) {
+	public ResponseEntity<?> delete(@PathVariable("idUsuario") int idUsuario) {
 		try {
 			return ResponseEntity.ok(usersService.delete(idUsuario));
 		} catch (ErrorException e) {
