@@ -31,6 +31,16 @@ public class TareasServiceImpl implements TareasService {
 	}
 
 	@Override
+	public List<Tarea> findAllByUsuarioId(int usuarioId) throws ErrorException {
+		List<Tarea> tareas = repo.findByUsuario_Id(usuarioId);
+		if (tareas.isEmpty()) {
+			throw new ErrorException(Errores.VACIO, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return tareas;
+	}
+
+
+	@Override
 	public Tarea findById(int id) throws ErrorException {
 		return repo.findById(id).orElseThrow(() -> new ErrorException(Errores.NO_ENCONTRADO, HttpStatus.NOT_FOUND));
 	}

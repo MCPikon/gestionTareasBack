@@ -29,6 +29,16 @@ public class TareasController {
 			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
 		}
 	}
+
+	@GetMapping("/getAllByUsuarioId/{usuarioId}")
+	public ResponseEntity<?> findAllByUsuario(@PathVariable("usuarioId") int usuarioId) {
+		try {
+			List<Tarea> tareas = tasksService.findAllByUsuarioId(usuarioId);
+			return ResponseEntity.ok(tareas);
+		} catch (ErrorException e) {
+			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
+		}
+	}
 	
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<?> findById(@PathVariable("id") int id) {
