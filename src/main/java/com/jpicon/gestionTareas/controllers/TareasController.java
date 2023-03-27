@@ -2,7 +2,9 @@ package com.jpicon.gestionTareas.controllers;
 
 import java.util.List;
 
+import com.jpicon.gestionTareas.model.Mensaje;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +54,7 @@ public class TareasController {
 	@PostMapping("/addTarea")
 	public ResponseEntity<?> save(@RequestBody Tarea t) {
 		try {
+			System.out.println(t.toString());
 			return ResponseEntity.ok(tasksService.save(t));
 		} catch (ErrorException e) {
 			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
@@ -69,11 +72,11 @@ public class TareasController {
 	
 	@DeleteMapping("/deleteTarea/{idTarea}")
 	public ResponseEntity<?> delete(@PathVariable("idTarea") int idTarea) {
-		try {
-			return ResponseEntity.ok(tasksService.delete(idTarea));
-		} catch (ErrorException e) {
-			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
+		if (!tasksService.existsById(idTarea)) {
+			return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
 		}
+		tasksService.delete(idTarea);
+		return new ResponseEntity(new Mensaje("tarea eliminada"), HttpStatus.OK);
 	}
 
 }

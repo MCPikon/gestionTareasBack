@@ -13,4 +13,6 @@ public interface TareasRepository extends JpaRepository<Tarea, Integer>{
 
     List<Tarea> findByUsuario_Id(int id);
 
+    boolean existsById(int id);
+
 }

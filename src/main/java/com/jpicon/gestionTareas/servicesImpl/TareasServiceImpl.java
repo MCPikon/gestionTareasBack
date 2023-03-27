@@ -39,6 +39,11 @@ public class TareasServiceImpl implements TareasService {
 		return tareas;
 	}
 
+	@Override
+	public boolean existsById(int id) throws ErrorException {
+		return repo.existsById(id);
+	}
+
 
 	@Override
 	public Tarea findById(int id) throws ErrorException {
