@@ -1,5 +1,10 @@
 package com.jpicon.gestionTareas.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum Errores {
 
 	NO_ENCONTRADO(1L,"No encontrado"),
@@ -12,18 +17,5 @@ public enum Errores {
 	
 	private Long id;
 	private String mensaje;
-	
-	private Errores(Long id, String mensaje) {
-		this.id = id;
-		this.mensaje = mensaje;
-	}
-	
-	public Long getId() {
-		return id;
-	}
-
-	public String getMensaje() {
-		return mensaje;
-	}
 	
 }

@@ -1,6 +1,7 @@
 package com.jpicon.gestionTareas.security.entities;
 
 import com.jpicon.gestionTareas.entities.Usuario;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,18 +10,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 public class UsuarioPrincipal implements UserDetails {
     private String nombre;
     private String email;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
-
-    public UsuarioPrincipal(String nombre, String email, String password, Collection<? extends GrantedAuthority> authorities) {
-        this.nombre = nombre;
-        this.email = email;
-        this.password = password;
-        this.authorities = authorities;
-    }
 
     public static UsuarioPrincipal build(Usuario usuario){
         List<GrantedAuthority> authorities =
