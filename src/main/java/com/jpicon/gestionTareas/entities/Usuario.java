@@ -1,86 +1,52 @@
 package com.jpicon.gestionTareas.entities;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import com.jpicon.gestionTareas.security.entities.Rol;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuario")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Usuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_usuario")
-	private long idUsuario;
+	@Column(name = "id")
+	private int id;
 	
-	@Column(name = "nombre")
+	@Column(name = "nombre", nullable = false)
 	private String nombre;
 	
-	@Column(name = "email")
+	@Column(name = "email", unique = true, nullable = false)
 	private String email;
 	
-	@Column(name = "password")
+	@Column(name = "password", nullable = false)
 	private String password;
 	
 	@OneToMany(mappedBy = "usuario")
 	@JsonIgnoreProperties("usuario")
 	private List<Tarea> tareas;
 
-	public Usuario() {
-		super();
-	}
+	@NotNull
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"),
+			inverseJoinColumns = @JoinColumn(name = "rol_id"))
+	private Set<Rol> roles = new HashSet<>();
 
-	public Usuario(long idUsuario) {
-		super();
-		this.idUsuario = idUsuario;
-	}
-
-	public long getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(long idUsuario) {
-		this.idUsuario = idUsuario;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
+	public Usuario(@NotNull String nombre, @NotNull String email, @NotNull String password) {
 		this.nombre = nombre;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public List<Tarea> getTareas() {
-		return tareas;
-	}
-
-	public void setTareas(List<Tarea> tareas) {
-		this.tareas = tareas;
-	}
-
 }

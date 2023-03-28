@@ -4,14 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.jpicon.gestionTareas.entities.Usuario;
 import com.jpicon.gestionTareas.model.ErrorException;
@@ -20,6 +13,7 @@ import com.jpicon.gestionTareas.services.UsuariosService;
 
 @RestController
 @RequestMapping("/usuarios")
+@CrossOrigin(origins = "*")
 public class UsuariosController {
 
 	@Autowired
@@ -36,9 +30,18 @@ public class UsuariosController {
 	}
 	
 	@GetMapping("/findById/{id}")
-	public ResponseEntity<?> findById(@PathVariable("id") Long id) {
+	public ResponseEntity<?> findById(@PathVariable("id") int id) {
 		try {
 			return ResponseEntity.ok(usersService.findById(id));
+		} catch (ErrorException e) {
+			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
+		}
+	}
+
+	@GetMapping("/getByEmail/{email}")
+	public ResponseEntity<?> getByEmail(@PathVariable("email") String email) {
+		try {
+			return ResponseEntity.ok(usersService.getByEmail(email));
 		} catch (ErrorException e) {
 			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
 		}
@@ -63,7 +66,7 @@ public class UsuariosController {
 	}
 	
 	@DeleteMapping("/deleteUsuario/{idUsuario}")
-	public ResponseEntity<?> delete(@PathVariable("idUsuario") Long idUsuario) {
+	public ResponseEntity<?> delete(@PathVariable("idUsuario") int idUsuario) {
 		try {
 			return ResponseEntity.ok(usersService.delete(idUsuario));
 		} catch (ErrorException e) {
