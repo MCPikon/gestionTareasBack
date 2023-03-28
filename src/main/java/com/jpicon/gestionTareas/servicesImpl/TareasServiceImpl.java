@@ -40,6 +40,15 @@ public class TareasServiceImpl implements TareasService {
 	}
 
 	@Override
+	public List<Tarea> findAllByEstadoAndUsuarioId(String estado, int usuarioId) throws ErrorException {
+		List<Tarea> tareas = repo.findByEstadoAndUsuario_Id(estado, usuarioId);
+		if (tareas.isEmpty()) {
+			throw new ErrorException(Errores.VACIO, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return tareas;
+	}
+
+	@Override
 	public boolean existsById(int id) throws ErrorException {
 		return repo.existsById(id);
 	}

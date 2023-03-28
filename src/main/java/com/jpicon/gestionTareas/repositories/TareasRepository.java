@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface TareasRepository extends JpaRepository<Tarea, Integer>{
 
     List<Tarea> findByUsuario_Id(int id);
-
+    List<Tarea> findByEstadoAndUsuario_Id(String estado, int id);
     boolean existsById(int id);
 
 }

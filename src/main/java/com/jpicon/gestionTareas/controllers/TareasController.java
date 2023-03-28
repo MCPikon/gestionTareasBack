@@ -41,6 +41,16 @@ public class TareasController {
 			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
 		}
 	}
+
+	@GetMapping("/getAllByEstadoAndUsuarioId/{estado}/{usuarioId}")
+	public ResponseEntity<?> findAllByEstadoAndUsuario(@PathVariable("estado") String estado, @PathVariable("usuarioId") int usuarioId) {
+		try {
+			List<Tarea> tareas = tasksService.findAllByEstadoAndUsuarioId(estado, usuarioId);
+			return ResponseEntity.ok(tareas);
+		} catch (ErrorException e) {
+			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
+		}
+	}
 	
 	@GetMapping("/findById/{id}")
 	public ResponseEntity<?> findById(@PathVariable("id") int id) {
@@ -68,6 +78,28 @@ public class TareasController {
 		} catch (ErrorException e) {
 			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
 		}
+	}
+
+	@PutMapping("/marcarTareaCompletada")
+	public ResponseEntity<?> marcarComoCompletada(@RequestBody int idTarea) {
+		if (!tasksService.existsById(idTarea)) {
+			return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+		}
+		Tarea t = tasksService.findById(idTarea);
+		t.setEstado("Completada");
+		tasksService.update(t);
+		return new ResponseEntity(new Mensaje("tarea marcada como completada"), HttpStatus.OK);
+	}
+
+	@PutMapping("/marcarTareaPendiente")
+	public ResponseEntity<?> marcarComoPendiente(@RequestBody int idTarea) {
+		if (!tasksService.existsById(idTarea)) {
+			return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+		}
+		Tarea t = tasksService.findById(idTarea);
+		t.setEstado("Pendiente");
+		tasksService.update(t);
+		return new ResponseEntity(new Mensaje("tarea marcada como pendiente"), HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/deleteTarea/{idTarea}")
