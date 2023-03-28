@@ -14,8 +14,6 @@ public interface UsuariosService {
 
 	public Optional<Usuario> getByEmail(String email) throws ErrorException;
 
-	public Optional<Usuario> getByTokenPassword(String tokenPassword) throws ErrorException;
-
 	public boolean existsByEmail(String email) throws ErrorException;
 	
 	public Usuario save(Usuario u) throws ErrorException;

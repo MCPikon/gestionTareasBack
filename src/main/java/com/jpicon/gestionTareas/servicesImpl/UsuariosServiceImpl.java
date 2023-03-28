@@ -41,11 +41,6 @@ public class UsuariosServiceImpl implements UsuariosService {
 	}
 
 	@Override
-	public Optional<Usuario> getByTokenPassword(String tokenPassword) throws ErrorException {
-		return repo.findByTokenPassword(tokenPassword);
-	}
-
-	@Override
 	public boolean existsByEmail(String email) throws ErrorException {
 		return repo.existsByEmail(email);
 	}
