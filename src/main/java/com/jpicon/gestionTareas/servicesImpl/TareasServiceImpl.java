@@ -1,5 +1,6 @@
 package com.jpicon.gestionTareas.servicesImpl;
 
+import java.util.Date;
 import java.util.List;
 
 import jakarta.transaction.Transactional;
@@ -33,6 +34,15 @@ public class TareasServiceImpl implements TareasService {
 	@Override
 	public List<Tarea> findAllByUsuarioId(int usuarioId) throws ErrorException {
 		List<Tarea> tareas = repo.findByUsuario_Id(usuarioId);
+		if (tareas.isEmpty()) {
+			throw new ErrorException(Errores.VACIO, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return tareas;
+	}
+
+	@Override
+	public List<Tarea> findByFechaLimiteBetweenAndUsuario_Id(Date fechaLimiteStart, Date fechaLimiteEnd, int id) throws ErrorException {
+		List<Tarea> tareas = repo.findByFechaLimiteBetweenAndUsuario_Id(fechaLimiteStart, fechaLimiteEnd, id);
 		if (tareas.isEmpty()) {
 			throw new ErrorException(Errores.VACIO, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

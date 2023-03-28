@@ -1,5 +1,6 @@
 package com.jpicon.gestionTareas.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import com.jpicon.gestionTareas.model.Mensaje;
@@ -36,6 +37,42 @@ public class TareasController {
 	public ResponseEntity<?> findAllByUsuario(@PathVariable("usuarioId") int usuarioId) {
 		try {
 			List<Tarea> tareas = tasksService.findAllByUsuarioId(usuarioId);
+			return ResponseEntity.ok(tareas);
+		} catch (ErrorException e) {
+			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
+		}
+	}
+
+	@GetMapping("/getAllByFechaLimiteHoyAndUsuarioId/{usuarioId}")
+	public ResponseEntity<?> getAllByFechaLimiteHoyAndUsuarioId(@PathVariable("usuarioId") int usuarioId) {
+		try {
+			Date fechaInicio = new Date();
+			Date fechaFin = new Date(fechaInicio.getTime() + 24 * 60 * 60 * 1000L);
+			List<Tarea> tareas = tasksService.findByFechaLimiteBetweenAndUsuario_Id(fechaInicio, fechaFin, usuarioId);
+			return ResponseEntity.ok(tareas);
+		} catch (ErrorException e) {
+			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
+		}
+	}
+
+	@GetMapping("/getAllByFechaLimiteSemanaAndUsuarioId/{usuarioId}")
+	public ResponseEntity<?> getAllByFechaLimiteSemanaAndUsuarioId(@PathVariable("usuarioId") int usuarioId) {
+		try {
+			Date fechaInicio = new Date();
+			Date fechaFin = new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000);
+			List<Tarea> tareas = tasksService.findByFechaLimiteBetweenAndUsuario_Id(fechaInicio, fechaFin, usuarioId);
+			return ResponseEntity.ok(tareas);
+		} catch (ErrorException e) {
+			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
+		}
+	}
+
+	@GetMapping("/getAllByFechaLimiteMesAndUsuarioId/{usuarioId}")
+	public ResponseEntity<?> getAllByFechaLimiteMesAndUsuarioId(@PathVariable("usuarioId") int usuarioId) {
+		try {
+			Date fechaInicio = new Date();
+			Date fechaFin = new Date(System.currentTimeMillis() + 30 * 24 * 60 * 60 * 1000L);
+			List<Tarea> tareas = tasksService.findByFechaLimiteBetweenAndUsuario_Id(fechaInicio, fechaFin, usuarioId);
 			return ResponseEntity.ok(tareas);
 		} catch (ErrorException e) {
 			return new ResponseEntity<ResponseBase>(new ResponseBase(e), e.getIdStatus());
