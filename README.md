@@ -2,6 +2,12 @@
 
 > Esta es solamente una parte del proyecto, la parte de Frontend esta en el repositorio [GestionTareasFront](https://github.com/MCPikon/gestionTareasFront)
 
+## Autor
+
+* [Javier Picón](https://github.com/MCPikon)
+
+## Descripción
+
 Proyecto Final del Curso de Agrupo Sistemas que consiste en un Backend hecho enteramente con Java 17 y Spring Boot (versión 3.0.4).
 
 ## Tecnologías
